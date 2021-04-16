@@ -4,7 +4,6 @@ export class Eventable {
   private _evt: string;
   private _triggerEvt: string;
   private _triggerFn: Function | undefined;
-  private _triggerFnData: any | undefined;
 
   constructor(obj: any) {
     this._evt = '';
@@ -17,11 +16,11 @@ export class Eventable {
   public dispatchEvent(evt: string, data?: any) {
     this._evt = evt;
     for(const obj of Storage.getInstance().getExistingStorageMap().values()) {
-      if((obj as Eventable)._triggerEvt === this._evt) {
+      if(obj._triggerEvt === this._evt) {
         if(data) {
-          (obj as Eventable).callTriggerFn(data);
+          obj.callTriggerFn(data);
         } else {
-          (obj as Eventable).callTriggerFn();
+          obj.callTriggerFn();
         }
       }
     }
@@ -32,8 +31,8 @@ export class Eventable {
     this._triggerFn = cb;
   }
 
-  private _populateStorage() {
-    Storage.getInstance().push(this as Eventable);
+  private _populateStorage(this: Eventable) {
+    Storage.getInstance().push(this);
   }
 
   private callTriggerFn(data?: any) {

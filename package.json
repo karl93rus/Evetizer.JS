@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --config webpack.dev.js"
+    "dev": "webpack --config webpack.dev.js",
+    "build": "webpack --config webpack.build.js"
   },
   "author": "alex sazonov",
   "license": "ISC",

@@ -1,3 +1,5 @@
+import { Eventable } from './Eventable';
+
 type StorageMap = Map<Symbol, Eventable> | null;
 
 export class Storage {
@@ -28,7 +30,7 @@ export class Storage {
       throw new Error('No storage. Create Eventable first');
     }
 
-    return this._storage;
+    return this._storage as Map<Symbol, Eventable>;
   }
 
   private _createStorage() {
