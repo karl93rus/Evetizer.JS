@@ -9,21 +9,22 @@ export class Eventable {
     this._evt = '';
     this._triggerEvt = '';
     this._triggerFn = undefined;
-
     this._populateStorage();
   }
 
   public dispatchEvent(evt: string, data?: any) {
     this._evt = evt;
-    for(const obj of Storage.getInstance().getExistingStorageMap().values()) {
-      if(obj._triggerEvt === this._evt) {
-        if(data) {
-          obj.callTriggerFn(data);
-        } else {
-          obj.callTriggerFn();
+    setTimeout(() => {
+      for(const obj of Storage.getInstance().getExistingStorageMap().values()) {
+        if(obj._triggerEvt === this._evt) {
+          if(data) {
+            obj.callTriggerFn(data);
+          } else {
+            obj.callTriggerFn();
+          }
         }
       }
-    }
+    }, 0);
   }
 
   public on(evt: string, cb: (data?: any) => any) {
